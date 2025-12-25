@@ -1,0 +1,271 @@
+{
+  "consumer": {
+    "name": "NextJS-Frontend"
+  },
+  "provider": {
+    "name": "Interview-Management-Service"
+  },
+  "interactions": [
+    {
+      "description": "Get interview reports list for admin",
+      "providerState": "admin is authenticated and interview reports exist",
+      "request": {
+        "method": "GET",
+        "path": "/api/admin/interview-reports",
+        "headers": {
+          "Authorization": "Bearer admin_jwt_token",
+          "Content-Type": "application/json"
+        },
+        "query": {
+          "page": "1",
+          "limit": "20",
+          "search": "",
+          "sortBy": "createdAt",
+          "sortOrder": "desc"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "reports": [
+              {
+                "id": "report-123",
+                "createdAt": "2024-01-25T14:35:00Z",
+                "interviewDate": "2024-01-25T14:00:00Z",
+                "userId": "user-456",
+                "userName": "John Doe",
+                "title": "General Interview Assessment",
+                "summary": "Strong communication skills with room for improvement in technical depth",
+                "overallScore": 7.8,
+                "status": "completed"
+              }
+            ],
+            "pagination": {
+              "currentPage": 1,
+              "totalPages": 3,
+              "totalReports": 45,
+              "hasNext": true,
+              "hasPrevious": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Get interview report details for admin",
+      "providerState": "admin is authenticated and report exists",
+      "request": {
+        "method": "GET",
+        "path": "/api/admin/interview-reports/report-123",
+        "headers": {
+          "Authorization": "Bearer admin_jwt_token",
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "report": {
+              "id": "report-123",
+              "sessionId": "interview-session-456",
+              "userId": "user-456",
+              "userName": "John Doe",
+              "userEmail": "john.doe@example.com",
+              "createdAt": "2024-01-25T14:35:00Z",
+              "interviewDate": "2024-01-25T14:00:00Z",
+              "duration": 1800,
+              "title": "General Interview Assessment",
+              "companyContext": {
+                "id": "company-789",
+                "name": "Tech Corp",
+                "position": "Software Engineer"
+              },
+              "assessment": {
+                "overallScore": 7.8,
+                "categories": {
+                  "communication": 8.5,
+                  "technical": 6.5,
+                  "leadership": 8.0,
+                  "problemSolving": 7.5,
+                  "culturalFit": 8.2
+                },
+                "strengths": [
+                  "Excellent verbal communication skills",
+                  "Strong leadership experience",
+                  "Good cultural alignment"
+                ],
+                "improvementAreas": [
+                  "Technical depth in specific frameworks",
+                  "More concrete examples needed"
+                ],
+                "recommendations": [
+                  "Focus on technical skill development",
+                  "Practice with specific scenario-based questions"
+                ]
+              },
+              "transcript": {
+                "available": true,
+                "wordCount": 2450,
+                "downloadUrl": "https://reports.example.com/transcript-456.txt"
+              },
+              "audioRecording": {
+                "available": true,
+                "duration": 1800,
+                "downloadUrl": "https://reports.example.com/audio-456.mp3",
+                "expiresAt": "2024-02-24T14:35:00Z"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Create interview preparation content",
+      "providerState": "admin is authenticated and user exists",
+      "request": {
+        "method": "POST",
+        "path": "/api/admin/interview-preparation",
+        "headers": {
+          "Authorization": "Bearer admin_jwt_token",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "userId": "user-456",
+          "interviewDate": "2024-02-01T15:00:00Z",
+          "authorId": "admin-123",
+          "title": "Technical Interview Preparation for Tech Corp",
+          "content": "Based on your recent assessment, here are key areas to focus on for your upcoming interview...",
+          "category": "technical",
+          "companyId": "company-789",
+          "tags": ["javascript", "react", "system_design"]
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "message": "Interview preparation content created successfully",
+          "data": {
+            "preparationId": "prep-789",
+            "userId": "user-456",
+            "title": "Technical Interview Preparation for Tech Corp",
+            "createdAt": "2024-01-26T10:00:00Z",
+            "interviewDate": "2024-02-01T15:00:00Z",
+            "author": {
+              "id": "admin-123",
+              "name": "Interview Coach Sarah"
+            },
+            "status": "active",
+            "notificationSent": true
+          }
+        }
+      }
+    },
+    {
+      "description": "Get user interview reports",
+      "providerState": "user is authenticated and has interview reports",
+      "request": {
+        "method": "GET",
+        "path": "/api/interview-reports",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        },
+        "query": {
+          "page": "1",
+          "limit": "10"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "reports": [
+              {
+                "id": "report-123",
+                "createdAt": "2024-01-25T14:35:00Z",
+                "interviewDate": "2024-01-25T14:00:00Z",
+                "title": "General Interview Assessment",
+                "companyName": "Tech Corp",
+                "overallScore": 7.8,
+                "status": "completed",
+                "keyInsights": [
+                  "Strong communication skills demonstrated",
+                  "Leadership experience clearly articulated",
+                  "Technical knowledge needs strengthening"
+                ]
+              }
+            ],
+            "pagination": {
+              "currentPage": 1,
+              "totalPages": 2,
+              "totalReports": 12,
+              "hasNext": true,
+              "hasPrevious": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Get user interview preparation content",
+      "providerState": "user is authenticated and has preparation content",
+      "request": {
+        "method": "GET",
+        "path": "/api/interview-preparation",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "preparations": [
+              {
+                "id": "prep-789",
+                "title": "Technical Interview Preparation for Tech Corp",
+                "createdAt": "2024-01-26T10:00:00Z",
+                "interviewDate": "2024-02-01T15:00:00Z",
+                "companyName": "Tech Corp",
+                "author": "Interview Coach Sarah",
+                "category": "technical",
+                "status": "active",
+                "preview": "Based on your recent assessment, here are key areas to focus on...",
+                "estimatedReadTime": 15,
+                "tags": ["javascript", "react", "system_design"]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

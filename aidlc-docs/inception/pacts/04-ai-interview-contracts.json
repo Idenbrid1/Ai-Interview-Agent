@@ -1,0 +1,253 @@
+{
+  "consumer": {
+    "name": "NextJS-Frontend"
+  },
+  "provider": {
+    "name": "AI-Interview-Service"
+  },
+  "interactions": [
+    {
+      "description": "Start AI interview session",
+      "providerState": "user is authenticated and has available interview sessions",
+      "request": {
+        "method": "POST",
+        "path": "/api/interview/start",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "interviewType": "general",
+          "theme": "job_hunting",
+          "companyId": "company-789",
+          "avatarSettings": {
+            "voice": "voice_1",
+            "appearance": "professional"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "sessionId": "interview-session-456",
+            "status": "preparing",
+            "estimatedDuration": 1800,
+            "avatar": {
+              "modelUrl": "https://avatar-cdn.example.com/model-123.glb",
+              "voiceId": "voice_1",
+              "initialGreeting": "Hello! I'm excited to conduct your interview today. Are you ready to begin?"
+            },
+            "webrtc": {
+              "iceServers": [
+                {
+                  "urls": "stun:stun.example.com:3478"
+                }
+              ],
+              "audioConfig": {
+                "sampleRate": 16000,
+                "channels": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Get interview session status",
+      "providerState": "interview session exists and user is authorized",
+      "request": {
+        "method": "GET",
+        "path": "/api/interview/session/interview-session-456",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "sessionId": "interview-session-456",
+            "status": "in_progress",
+            "startTime": "2024-01-25T14:00:00Z",
+            "elapsedTime": 900,
+            "estimatedDuration": 1800,
+            "currentQuestion": {
+              "id": "q-123",
+              "text": "Tell me about your greatest professional achievement.",
+              "category": "behavioral",
+              "timeLimit": 180
+            },
+            "progress": {
+              "questionsAnswered": 3,
+              "totalQuestions": 8,
+              "completionPercentage": 37.5
+            },
+            "transcription": {
+              "enabled": true,
+              "language": "ja-JP"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Submit interview response",
+      "providerState": "interview session is active and question is current",
+      "request": {
+        "method": "POST",
+        "path": "/api/interview/session/interview-session-456/response",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "questionId": "q-123",
+          "audioData": "base64_encoded_audio_data",
+          "transcription": "My greatest professional achievement was leading a team project that increased efficiency by 30%...",
+          "responseTime": 165,
+          "confidence": 0.85
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "responseId": "response-789",
+            "feedback": {
+              "immediate": "Great answer! Your specific example demonstrates leadership skills effectively.",
+              "score": 8.5,
+              "areas": [
+                "leadership",
+                "quantifiable_results",
+                "clear_communication"
+              ]
+            },
+            "nextQuestion": {
+              "id": "q-124",
+              "text": "How do you handle challenging situations at work?",
+              "category": "behavioral",
+              "timeLimit": 180
+            },
+            "progress": {
+              "questionsAnswered": 4,
+              "totalQuestions": 8,
+              "completionPercentage": 50
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Complete interview session",
+      "providerState": "interview session is active and can be completed",
+      "request": {
+        "method": "POST",
+        "path": "/api/interview/session/interview-session-456/complete",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "completionType": "finished",
+          "finalNotes": "Interview completed successfully"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "message": "Interview completed successfully",
+          "data": {
+            "sessionId": "interview-session-456",
+            "status": "completed",
+            "completedAt": "2024-01-25T14:30:00Z",
+            "duration": 1800,
+            "summary": {
+              "questionsAnswered": 8,
+              "overallScore": 7.8,
+              "strengths": ["communication", "leadership", "problem_solving"],
+              "improvementAreas": ["technical_depth", "specific_examples"]
+            },
+            "reportGeneration": {
+              "status": "processing",
+              "estimatedCompletion": "2024-01-25T14:35:00Z",
+              "reportId": "report-321"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Get avatar voice settings",
+      "providerState": "user is authenticated",
+      "request": {
+        "method": "GET",
+        "path": "/api/interview/avatar/voices",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "voices": [
+              {
+                "id": "voice_1",
+                "name": "Professional Female",
+                "gender": "female",
+                "language": "ja-JP",
+                "accent": "standard",
+                "sampleUrl": "https://audio-samples.example.com/voice_1_sample.mp3"
+              },
+              {
+                "id": "voice_2",
+                "name": "Professional Male",
+                "gender": "male",
+                "language": "ja-JP",
+                "accent": "standard",
+                "sampleUrl": "https://audio-samples.example.com/voice_2_sample.mp3"
+              },
+              {
+                "id": "voice_3",
+                "name": "Neutral Professional",
+                "gender": "neutral",
+                "language": "ja-JP",
+                "accent": "standard",
+                "sampleUrl": "https://audio-samples.example.com/voice_3_sample.mp3"
+              }
+            ],
+            "currentSelection": "voice_1"
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

@@ -1,0 +1,469 @@
+{
+  "consumer": {
+    "name": "NextJS-Frontend"
+  },
+  "provider": {
+    "name": "Navigation-Static-Content-Service"
+  },
+  "interactions": [
+    {
+      "description": "Get user dashboard data",
+      "providerState": "user is authenticated and has dashboard data",
+      "request": {
+        "method": "GET",
+        "path": "/api/dashboard",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "user": {
+              "id": "user-123",
+              "name": "John Doe",
+              "theme": "job_hunting",
+              "profileCompleteness": 85
+            },
+            "upcomingInterviews": [
+              {
+                "id": "interview-456",
+                "companyName": "Tech Corp",
+                "position": "Software Engineer",
+                "scheduledAt": "2024-01-30T15:00:00Z",
+                "type": "technical",
+                "status": "confirmed",
+                "preparationMaterials": [
+                  {
+                    "id": "prep-789",
+                    "title": "Technical Interview Preparation",
+                    "type": "preparation_content"
+                  }
+                ]
+              }
+            ],
+            "subscription": {
+              "plan": "middle_plan",
+              "planName": "Middle Plan",
+              "status": "active",
+              "renewalDate": "2024-02-25T10:00:00Z",
+              "nextBillingDate": "2024-02-25T10:00:00Z",
+              "nextBillingAmount": 4980,
+              "currency": "JPY",
+              "usage": {
+                "interviewSessions": {
+                  "used": 3,
+                  "limit": 15,
+                  "percentage": 20
+                },
+                "documentStorage": {
+                  "used": "150MB",
+                  "limit": "500MB",
+                  "percentage": 30
+                }
+              }
+            },
+            "paymentHistory": [
+              {
+                "id": "payment-123",
+                "amount": 4980,
+                "currency": "JPY",
+                "date": "2024-01-25T10:00:00Z",
+                "status": "completed",
+                "description": "Middle Plan - Monthly Subscription"
+              }
+            ],
+            "announcements": [
+              {
+                "id": "ann-456",
+                "title": "New AI Interview Features Available",
+                "content": "We've added new voice options and improved feedback algorithms...",
+                "priority": "normal",
+                "createdAt": "2024-01-26T11:00:00Z",
+                "readAt": null,
+                "displayUntil": "2024-02-26T11:00:00Z"
+              }
+            ],
+            "recentActivity": [
+              {
+                "type": "interview_completed",
+                "description": "Completed interview with Tech Corp",
+                "timestamp": "2024-01-25T14:30:00Z",
+                "relatedId": "interview-session-456"
+              },
+              {
+                "type": "document_uploaded",
+                "description": "Uploaded new resume",
+                "timestamp": "2024-01-24T16:00:00Z",
+                "relatedId": "doc-456"
+              }
+            ],
+            "quickStats": {
+              "totalInterviews": 8,
+              "averageScore": 7.8,
+              "documentsUploaded": 12,
+              "assessmentsCompleted": 3,
+              "applicationsSubmitted": 5
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Get navigation menu for user",
+      "providerState": "user is authenticated",
+      "request": {
+        "method": "GET",
+        "path": "/api/navigation/menu",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "userType": "new_graduate",
+            "theme": "job_hunting",
+            "menuItems": [
+              {
+                "id": "dashboard",
+                "label": "Dashboard",
+                "icon": "dashboard",
+                "path": "/dashboard",
+                "order": 1,
+                "enabled": true
+              },
+              {
+                "id": "ai_interview",
+                "label": "AI Interview",
+                "icon": "microphone",
+                "path": "/interview",
+                "order": 2,
+                "enabled": true,
+                "badge": "New"
+              },
+              {
+                "id": "interview_reports",
+                "label": "Interview Reports",
+                "icon": "document-report",
+                "path": "/reports",
+                "order": 3,
+                "enabled": true
+              },
+              {
+                "id": "assessments",
+                "label": "Self Analysis",
+                "icon": "chart-bar",
+                "path": "/assessments",
+                "order": 4,
+                "enabled": true,
+                "submenu": [
+                  {
+                    "id": "career_aptitude",
+                    "label": "Career Aptitude Test",
+                    "path": "/assessments/career-aptitude"
+                  },
+                  {
+                    "id": "personality",
+                    "label": "16 Personality Test",
+                    "path": "/assessments/16personality"
+                  },
+                  {
+                    "id": "spi",
+                    "label": "SPI Test",
+                    "path": "/assessments/spi"
+                  }
+                ]
+              },
+              {
+                "id": "documents",
+                "label": "Document Drive",
+                "icon": "folder",
+                "path": "/documents",
+                "order": 5,
+                "enabled": true
+              },
+              {
+                "id": "companies",
+                "label": "Recommended Companies",
+                "icon": "office-building",
+                "path": "/companies",
+                "order": 6,
+                "enabled": true
+              },
+              {
+                "id": "messages",
+                "label": "Messages",
+                "icon": "mail",
+                "path": "/messages",
+                "order": 7,
+                "enabled": true,
+                "badge": "3"
+              },
+              {
+                "id": "profile",
+                "label": "Profile",
+                "icon": "user",
+                "path": "/profile",
+                "order": 8,
+                "enabled": true
+              },
+              {
+                "id": "settings",
+                "label": "Settings",
+                "icon": "cog",
+                "path": "/settings",
+                "order": 9,
+                "enabled": true
+              }
+            ],
+            "themeSettings": {
+              "primaryColor": "#3B82F6",
+              "secondaryColor": "#10B981",
+              "backgroundColor": "#F8FAFC",
+              "logoUrl": "/images/logo-job-hunting.png"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Get admin navigation menu",
+      "providerState": "admin is authenticated",
+      "request": {
+        "method": "GET",
+        "path": "/api/admin/navigation/menu",
+        "headers": {
+          "Authorization": "Bearer admin_jwt_token",
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "menuItems": [
+              {
+                "id": "dashboard",
+                "label": "Dashboard",
+                "icon": "chart-pie",
+                "path": "/admin/dashboard",
+                "order": 1,
+                "enabled": true,
+                "permissions": ["dashboard_view"]
+              },
+              {
+                "id": "user_management",
+                "label": "User Management",
+                "icon": "users",
+                "path": "/admin/users",
+                "order": 2,
+                "enabled": true,
+                "permissions": ["user_management"],
+                "submenu": [
+                  {
+                    "id": "user_list",
+                    "label": "User List",
+                    "path": "/admin/users"
+                  },
+                  {
+                    "id": "user_import",
+                    "label": "Import Users",
+                    "path": "/admin/users/import"
+                  }
+                ]
+              },
+              {
+                "id": "interview_management",
+                "label": "Interview Management",
+                "icon": "microphone",
+                "path": "/admin/interviews",
+                "order": 3,
+                "enabled": true,
+                "permissions": ["interview_management"],
+                "submenu": [
+                  {
+                    "id": "interview_reports",
+                    "label": "Interview Reports",
+                    "path": "/admin/interviews/reports"
+                  },
+                  {
+                    "id": "preparation_content",
+                    "label": "Preparation Content",
+                    "path": "/admin/interviews/preparation"
+                  }
+                ]
+              },
+              {
+                "id": "messaging",
+                "label": "Messaging",
+                "icon": "mail",
+                "path": "/admin/messages",
+                "order": 4,
+                "enabled": true,
+                "permissions": ["messaging"],
+                "submenu": [
+                  {
+                    "id": "messages",
+                    "label": "Messages",
+                    "path": "/admin/messages"
+                  },
+                  {
+                    "id": "announcements",
+                    "label": "Announcements",
+                    "path": "/admin/announcements"
+                  },
+                  {
+                    "id": "recommendations",
+                    "label": "User Recommendations",
+                    "path": "/admin/recommendations"
+                  }
+                ]
+              },
+              {
+                "id": "company_management",
+                "label": "Company Management",
+                "icon": "office-building",
+                "path": "/admin/companies",
+                "order": 5,
+                "enabled": true,
+                "permissions": ["company_management"]
+              },
+              {
+                "id": "settings",
+                "label": "Settings",
+                "icon": "cog",
+                "path": "/admin/settings",
+                "order": 6,
+                "enabled": true,
+                "permissions": ["admin_settings"]
+              }
+            ],
+            "userInfo": {
+              "id": "admin-123",
+              "name": "Admin User",
+              "email": "admin@company.com",
+              "role": "admin",
+              "permissions": [
+                "dashboard_view",
+                "user_management",
+                "interview_management",
+                "messaging",
+                "company_management",
+                "admin_settings"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Get static page content",
+      "providerState": "static page exists",
+      "request": {
+        "method": "GET",
+        "path": "/api/static/terms-of-service",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "pageId": "terms-of-service",
+            "title": "Terms of Service",
+            "lastUpdated": "2024-01-15T10:00:00Z",
+            "version": "1.2",
+            "content": {
+              "sections": [
+                {
+                  "title": "1. Acceptance of Terms",
+                  "content": "By accessing and using this AI Interview Platform service, you accept and agree to be bound by the terms and provision of this agreement."
+                },
+                {
+                  "title": "2. Use License",
+                  "content": "Permission is granted to temporarily use this platform for personal, non-commercial transitory viewing only."
+                },
+                {
+                  "title": "3. Privacy Policy",
+                  "content": "Your privacy is important to us. Please review our Privacy Policy, which also governs your use of the Service."
+                }
+              ]
+            },
+            "metadata": {
+              "language": "ja-JP",
+              "jurisdiction": "Japan",
+              "effectiveDate": "2024-01-01T00:00:00Z"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Update user theme preference",
+      "providerState": "user is authenticated",
+      "request": {
+        "method": "PUT",
+        "path": "/api/user/theme",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "theme": "career_change"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "message": "Theme updated successfully",
+          "data": {
+            "userId": "user-123",
+            "theme": "career_change",
+            "updatedAt": "2024-01-26T23:00:00Z",
+            "themeSettings": {
+              "primaryColor": "#7C3AED",
+              "secondaryColor": "#059669",
+              "backgroundColor": "#FAFAFA",
+              "logoUrl": "/images/logo-career-change.png"
+            },
+            "menuAdjustments": {
+              "hiddenItems": ["entry_sheet_creation"],
+              "additionalItems": ["career_history_management"]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

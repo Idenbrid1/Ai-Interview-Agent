@@ -1,0 +1,281 @@
+{
+  "consumer": {
+    "name": "NextJS-Frontend"
+  },
+  "provider": {
+    "name": "Payment-Subscription-Service"
+  },
+  "interactions": [
+    {
+      "description": "Get subscription plans",
+      "providerState": "subscription plans are available",
+      "request": {
+        "method": "GET",
+        "path": "/api/subscription/plans",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "plans": [
+              {
+                "id": "light_plan",
+                "name": "Light Plan",
+                "price": {
+                  "monthly": 2980,
+                  "annual": 30372,
+                  "currency": "JPY"
+                },
+                "features": {
+                  "interviewSessions": 5,
+                  "documentStorage": "100MB",
+                  "reportGeneration": true,
+                  "basicSupport": true,
+                  "premiumContent": false
+                },
+                "trialDays": 7
+              },
+              {
+                "id": "middle_plan",
+                "name": "Middle Plan",
+                "price": {
+                  "monthly": 4980,
+                  "annual": 50772,
+                  "currency": "JPY"
+                },
+                "features": {
+                  "interviewSessions": 15,
+                  "documentStorage": "500MB",
+                  "reportGeneration": true,
+                  "basicSupport": true,
+                  "premiumContent": true,
+                  "aiCoaching": true
+                },
+                "trialDays": 7
+              },
+              {
+                "id": "premium_plan",
+                "name": "Premium Plan",
+                "price": {
+                  "monthly": 7980,
+                  "annual": 81372,
+                  "currency": "JPY"
+                },
+                "features": {
+                  "interviewSessions": "unlimited",
+                  "documentStorage": "1GB",
+                  "reportGeneration": true,
+                  "prioritySupport": true,
+                  "premiumContent": true,
+                  "aiCoaching": true,
+                  "personalizedRecommendations": true
+                },
+                "trialDays": 7
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "description": "Create payment intent for subscription",
+      "providerState": "user is authenticated and plan exists",
+      "request": {
+        "method": "POST",
+        "path": "/api/payment/create-intent",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "planId": "middle_plan",
+          "billingCycle": "monthly",
+          "currency": "JPY"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "paymentIntentId": "pi_1234567890",
+            "clientSecret": "pi_1234567890_secret_abcdef",
+            "amount": 4980,
+            "currency": "JPY",
+            "planDetails": {
+              "id": "middle_plan",
+              "name": "Middle Plan",
+              "billingCycle": "monthly"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Confirm subscription payment",
+      "providerState": "payment intent exists and is ready for confirmation",
+      "request": {
+        "method": "POST",
+        "path": "/api/payment/confirm-subscription",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "paymentIntentId": "pi_1234567890",
+          "paymentMethodId": "pm_card_visa",
+          "billingDetails": {
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "address": {
+              "line1": "1-1-1 Shibuya",
+              "city": "Tokyo",
+              "postal_code": "150-0002",
+              "country": "JP"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "message": "Subscription activated successfully",
+          "data": {
+            "subscriptionId": "sub_1234567890",
+            "status": "active",
+            "currentPeriodStart": "2024-01-25T10:00:00Z",
+            "currentPeriodEnd": "2024-02-25T10:00:00Z",
+            "plan": {
+              "id": "middle_plan",
+              "name": "Middle Plan"
+            },
+            "invoice": {
+              "id": "in_1234567890",
+              "amount": 4980,
+              "currency": "JPY",
+              "downloadUrl": "https://invoice.stripe.com/i/acct_123/in_1234567890"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Get user subscription status",
+      "providerState": "user is authenticated and has active subscription",
+      "request": {
+        "method": "GET",
+        "path": "/api/subscription/status",
+        "headers": {
+          "Authorization": "Bearer user_jwt_token",
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "subscription": {
+              "id": "sub_1234567890",
+              "status": "active",
+              "plan": {
+                "id": "middle_plan",
+                "name": "Middle Plan",
+                "price": 4980,
+                "currency": "JPY"
+              },
+              "currentPeriodStart": "2024-01-25T10:00:00Z",
+              "currentPeriodEnd": "2024-02-25T10:00:00Z",
+              "nextBillingDate": "2024-02-25T10:00:00Z",
+              "nextBillingAmount": 4980,
+              "cancelAtPeriodEnd": false,
+              "trialEnd": null,
+              "usage": {
+                "interviewSessions": {
+                  "used": 3,
+                  "limit": 15
+                },
+                "documentStorage": {
+                  "used": "150MB",
+                  "limit": "500MB"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Get sales dashboard data for admin",
+      "providerState": "admin is authenticated",
+      "request": {
+        "method": "GET",
+        "path": "/api/admin/dashboard/sales",
+        "headers": {
+          "Authorization": "Bearer admin_jwt_token",
+          "Content-Type": "application/json"
+        },
+        "query": {
+          "period": "current_month"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "data": {
+            "revenue": {
+              "total": 15000000,
+              "monthly": 2500000,
+              "currentMonth": 2800000,
+              "currency": "JPY"
+            },
+            "arpu": {
+              "value": 4500,
+              "currency": "JPY"
+            },
+            "users": {
+              "total": 5000,
+              "newThisMonth": 450,
+              "active": 3200,
+              "byPlan": {
+                "light_plan": 2000,
+                "middle_plan": 2500,
+                "premium_plan": 500
+              }
+            },
+            "churn": {
+              "canceledUsers": 120,
+              "retentionRate": 92.5
+            }
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}
