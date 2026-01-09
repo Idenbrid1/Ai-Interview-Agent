@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Mail } from 'lucide-react'
 import InputGroup from '../molecules/InputGroup'
 import Button from '../atoms/Button'
+import MailIcon from '../../assets/auth/mail.svg'
+import BackArrow from '../../assets/auth/backarrow.svg'
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState('')
@@ -18,11 +20,11 @@ const ForgotPasswordForm = () => {
   return (
     <div className="w-full">
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-50 mb-4">
-          <Mail className="w-6 h-6 text-blue-600" />
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl shadow-custom mb-8">
+          <img src={MailIcon} className="w-7 h-7 " />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">Password Reset</h2>
-        <p className="text-gray-500 mt-2">Enter the email address you use.</p>
+        <h2 className="text-xl font-bold text-gray-900 mb-3">パスワードリセット</h2>
+        <p className="text-gray-500 text-[16px]">登録されたメールアドレスを入力してください</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -32,17 +34,14 @@ const ForgotPasswordForm = () => {
           placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          icon={Mail}
         />
 
         <Button className="w-full bg-[#2d3e50] hover:bg-[#1a2530]" onClick={handleSubmit}>
-          Reset Password
+          リセットリンクを送信
         </Button>
 
-        <div className="text-center">
-          <Link to="/login" className="text-sm text-blue-600 hover:text-blue-800">
-            Back to Login Page
-          </Link>
+        <div className='text-center cursor-pointer text-sm text-primary-color'>
+          <Link to="/login" className='inline-flex items-center gap-2'><img src={BackArrow} alt="" /> ログインページに戻る</Link>
         </div>
       </form>
     </div>

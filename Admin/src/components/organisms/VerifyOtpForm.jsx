@@ -38,11 +38,11 @@ const VerifyOtpForm = () => {
   return (
     <div className="w-full">
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-50 mb-4">
-          <Mail className="w-6 h-6 text-blue-600" />
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl shadow-custom mb-8">
+          <Mail className="w-7 h-7" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">Check your email</h2>
-        <p className="text-gray-500 mt-2">Enter the verification code sent to your email.</p>
+        <h2 className="text-xl font-bold text-gray-900 mb-3">メール確認</h2>
+        <p className="text-gray-500 text-[16px]">メールに送信された確認コードを入力してください</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -56,7 +56,7 @@ const VerifyOtpForm = () => {
               value={digit}
               onChange={(e) => handleOtpChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
-              className="w-12 h-12 text-center text-xl font-bold border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-20 h-20 text-center text-xl font-bold border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           ))}
         </div>
@@ -67,7 +67,6 @@ const VerifyOtpForm = () => {
           placeholder="••••••••"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          icon={Lock}
         />
 
         <InputGroup
@@ -76,7 +75,6 @@ const VerifyOtpForm = () => {
           placeholder="••••••••"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          icon={Lock}
         />
 
         <Button className="w-full bg-[#2d3e50] hover:bg-[#1a2530]" onClick={handleSubmit}>
@@ -84,8 +82,8 @@ const VerifyOtpForm = () => {
         </Button>
 
         <div className="text-center">
-            <p className="text-sm text-gray-500">
-                Didn't receive the code? <button type="button" className="text-blue-600 hover:text-blue-800 font-medium">Resend Code</button>
+            <p className="text-sm text-primary-color">
+                メールが届いていない場合 <button type="button" className="text-[#162445] font-normal  underline cursor-pointer">こちらより再送する</button>
             </p>
         </div>
       </form>

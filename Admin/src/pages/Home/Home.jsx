@@ -1,6 +1,6 @@
-import DashboardLayout from '../components/templates/DashboardLayout'
-import StatsGrid from '../components/organisms/StatsGrid'
-import FunnelSection from '../components/organisms/FunnelSection'
+import DashboardLayout from '../../components/templates/DashboardLayout'
+import StatsGrid from '../../components/organisms/StatsGrid'
+import FunnelSection from '../../components/organisms/FunnelSection'
 
 function Home() {
   return (

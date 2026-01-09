@@ -1,33 +1,33 @@
 import React from 'react'
-import { MessageCircle } from 'lucide-react' // Placeholder logo
+import Logo from '../../assets/auth/logo.svg'
+import BackgroundPattern from '../../assets/auth/background-pattern.png'
 
 const AuthLayout = ({ children }) => {
   return (
-    <div className="flex min-h-screen w-full">
+    <div className="flex min-h-screen ">
       {/* Left Side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white p-8">
-        <div className="w-full max-w-md space-y-8">
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white ]">
+        <div className="w-full  space-y-8 px-7.5">
           {children}
         </div>
       </div>
 
       {/* Right Side - Branding */}
-      <div className="hidden lg:flex w-1/2 bg-[#2d3e50] text-white flex-col items-center justify-center p-12 relative overflow-hidden">
+      <div className="hidden lg:flex w-full lg:w-1/2  text-white flex-col items-center justify-center p-20 relative overflow-hidden">
         {/* Background Pattern Overlay (Optional) */}
-        <div className="absolute inset-0 bg-blue-900/20 mix-blend-overlay"></div>
+        <div className="absolute inset-0  mix-blend-overlay">
+        <img src={BackgroundPattern} className='w-full h-full object-cover' alt="" />
+        </div>
         
         <div className="relative z-10 flex flex-col items-center text-center space-y-6">
           <div className="flex items-center gap-2">
-             <MessageCircle size={48} className="text-white" />
-             <div className="text-3xl font-bold tracking-wider">iShop</div>
+          
+             <img src={Logo} className="w-28" alt="" />
           </div>
           
-          <div className="space-y-2 max-w-lg">
-             <p className="text-lg opacity-90">
-               This site is iShop (Ai-Shop) management page.
-             </p>
-             <p className="text-sm opacity-75">
-               Only authorized personnel can access this management page.
+          <div className="space-y-2 ">
+             <p className="text-[21px] text-left opacity-90">
+               このサイトはichap（アイチャップ）の管理画面ページです。ログインしていただくと管理者としてマネジメントページをご利用いただけます。
              </p>
           </div>
         </div>
