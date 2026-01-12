@@ -36,7 +36,12 @@ const ForgotPasswordForm = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <Button className="w-full bg-[#2d3e50] hover:bg-[#1a2530]" onClick={handleSubmit}>
+        <Button 
+          variant="dark" 
+          fullWidth 
+          onClick={handleSubmit}
+          type="submit"
+        >
           リセットリンクを送信
         </Button>
 
