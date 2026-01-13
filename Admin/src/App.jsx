@@ -5,6 +5,7 @@ import Login from './pages/Login/Login'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import VerifyOtp from './pages/VerifyOtp/VerifyOtp'
 import ResetSuccess from './pages/ResetSuccess/ResetSuccess'
+import CompanyManagement from './pages/CompanyManagement/CompanyManagement'
 import './App.css'
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/reset-success" element={<ResetSuccess />} />
         <Route path="/dashboard" element={<Home />} />
+        <Route path="/company-management" element={<CompanyManagement />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>

@@ -1,8 +1,29 @@
 import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, Users, FileText, MessageSquare, Briefcase, Megaphone, ThumbsUp, Mail, Settings, LogOut, FileCheck, Shield, Building2 } from 'lucide-react'
 import NavItem from '../molecules/NavItem'
 
 const Sidebar = ({ className = '', isOpen, onClose }) => {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const navItems = [
+    { icon: LayoutDashboard, label: 'トップページ', path: '/dashboard' },
+    { icon: Users, label: 'ユーザー管理', path: '/users' },
+    { icon: FileText, label: '面談レポート管理', path: '/interview-reports' },
+    { icon: MessageSquare, label: '面接対策内容管理', path: '/interview-preparation' },
+    { icon: Briefcase, label: 'メッセージ・応募状況管理', path: '/messages' },
+    { icon: Building2, label: '会社・求人管理', path: '/company-management' },
+    { icon: Megaphone, label: 'お知らせ管理', path: '/notifications' },
+    { icon: ThumbsUp, label: '推薦文管理', path: '/recommendations' },
+    { icon: Mail, label: 'オリジナルキャリアレポート管理', path: '/career-reports' },
+  ]
+
+  const handleNavClick = (path) => {
+    navigate(path)
+    onClose()
+  }
+
   return (
     <>
       {/* Mobile Overlay */}
@@ -32,25 +53,25 @@ const Sidebar = ({ className = '', isOpen, onClose }) => {
         </div>
         
         <nav className="flex-1 overflow-y-auto custom-scrollbar">
-          <NavItem icon={LayoutDashboard} label="トップページ" active />
-          <NavItem icon={Users} label="ユーザー管理" />
-          <NavItem icon={FileText} label="面談レポート管理" />
-          <NavItem icon={MessageSquare} label="面接対策内容管理" />
-          <NavItem icon={Briefcase} label="メッセージ・応募状況管理" />
-          <NavItem icon={Building2} label="会社・求人管理" />
-          <NavItem icon={Megaphone} label="お知らせ管理" />
-          <NavItem icon={ThumbsUp} label="推薦文管理" />
-          <NavItem icon={Mail} label="オリジナルキャリアレポート管理" />
+          {navItems.map((item) => (
+            <NavItem 
+              key={item.path}
+              icon={item.icon} 
+              label={item.label} 
+              active={location.pathname === item.path}
+              onClick={() => handleNavClick(item.path)}
+            />
+          ))}
         </nav>
   
         <div className="border-t border-gray-700 mt-4 pt-4 pb-6">
-           <NavItem icon={Settings} label="設定" />
-           <NavItem icon={LogOut} label="ログアウト" />
+           <NavItem icon={Settings} label="設定" onClick={() => handleNavClick('/settings')} />
+           <NavItem icon={LogOut} label="ログアウト" onClick={() => handleNavClick('/login')} />
         </div>
          <div className="border-t border-gray-700 mt-auto pt-4 pb-6 mb-4">
-           <NavItem icon={FileCheck} label="利用規約" />
-           <NavItem icon={Shield} label="プライバシーポリシー" />
-           <NavItem icon={Building2} label="会社情報" />
+           <NavItem icon={FileCheck} label="利用規約" onClick={() => handleNavClick('/terms')} />
+           <NavItem icon={Shield} label="プライバシーポリシー" onClick={() => handleNavClick('/privacy')} />
+           <NavItem icon={Building2} label="会社情報" onClick={() => handleNavClick('/company-info')} />
         </div>
       </div>
     </>
